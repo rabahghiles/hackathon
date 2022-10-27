@@ -1,20 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>hackathon 3</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import ControlScreen from "./screens/Control";
+import DataScreen from "./screens/Data";
+
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function App (){
+  return ( 
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Control" component={ControlScreen} />
+        <Tab.Screen name="Data" component={DataScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+export default App;
