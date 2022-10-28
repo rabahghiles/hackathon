@@ -3,12 +3,35 @@ import { View, Text, Button, Switch, StyleSheet, Image, TouchableOpacity } from 
 
 function ControlScreen ({navigation}){
 
-    const [compteur, setCompteur] = useState(4);
     const [isOn, setIsOn] = useState(false);
-    const toggleSwitch = () => setIsOn(previousState => !previousState);
+    const turn = isOn ? 'off' : 'on';
+    const url = "https://shelly-51-eu.shelly.cloud/device/relay/control?channel=0&turn="+turn+"&id=0cdc7ef58310&auth_key=MTQxYTZldWlk362DCE2304242B175C1255E35BD893B37007BA633F35D40C767336868C8D9FBE58261888397DD623"
+    const toggleSwitch = () => {setIsOn(previousState => !previousState ) ; postExample };
     var icon = isOn
       ? require('../assets/lampeAllume.png')
       : require('../assets/lampe.png');
+
+    let formdata = new FormData();
+
+    formdata.append("id", '0cdc7ef58310')
+    formdata.append("channel", 0)
+    formdata.append("turn", turn)
+    formdata.append("auth_key", 'MTQxYTZldWlk362DCE2304242B175C1255E35BD893B37007BA633F35D40C767336868C8D9FBE58261888397DD623')
+
+    const postExample = async () => {
+    setIsOn(previousState => !previousState );
+    const params = {
+          method: 'POST',
+          headers: {
+          'Content-Type': 'multipart/form-data' ,
+          },
+          body: formdata
+        };
+        fetch('https://shelly-51-eu.shelly.cloud/device/relay/control', params)
+          .then(response => response.json())
+          .then(data => console.log(data));
+    }
+
 
     const styles = StyleSheet.create({
       container: {
@@ -29,7 +52,7 @@ function ControlScreen ({navigation}){
       </View>
       <View style={styles.menu} >
               <View style={{alignItems: 'center'  , marginBottom : 20 }} >
-              <TouchableOpacity onPress={toggleSwitch}>
+              <TouchableOpacity onPress={postExample}>
             <Image style={{width: 80 , height: 115 }} source={icon}  />
             </TouchableOpacity>
 
