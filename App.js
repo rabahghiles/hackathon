@@ -11,9 +11,17 @@ const Tab = createBottomTabNavigator();
 function App (){
   return ( 
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false
+        }}
+        
+      >
+        <Tab.Screen
+          name="Data"
+          component={DataScreen}
+        />
         <Tab.Screen name="Control" component={ControlScreen} />
-        <Tab.Screen name="Data" component={DataScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   )
